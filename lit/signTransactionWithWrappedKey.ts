@@ -12,10 +12,6 @@ import {
 
 const { signTransactionWithEncryptedKey } = api;
 
-// import { getEnv } from "./utils";
-
-// const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
-
 const ETHEREUM_PRIVATE_KEY: string | undefined =
 process.env.NEXT_PUBLIC_ETHEREUM_PRIVATE_KEY;
 
