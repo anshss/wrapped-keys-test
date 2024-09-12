@@ -78,7 +78,7 @@ export default function Home() {
             );
         }
 
-        console.log("signMsg()");
+        console.log(`signMsg() on ${litNetwork}`);
 
         const messageToSign = ethers.utils.toUtf8Bytes(
             "The answer to the universe is 42"
@@ -106,7 +106,7 @@ export default function Home() {
             console.log("signedMessage", signedMessage);
         }
 
-        console.log("signTx()");
+        console.log(`signTx() on ${litNetwork}`);
 
         const litTransaction: EthereumLitTransaction = {
             chainId: 175188,
@@ -171,7 +171,7 @@ export default function Home() {
         if (litNetwork != LitNetwork.DatilDev) {
             generateWrappedKeyResponse = (await generateWrappedKey(
                 mintedPkp!.publicKey,
-                "evm",
+                "solana",
                 "This is a Dev Guide code example testing Ethereum key",
                 litNetwork,
                 capacityDelegationAuthSig
@@ -183,7 +183,7 @@ export default function Home() {
         } else {
             generateWrappedKeyResponse = (await generateWrappedKey(
                 mintedPkp!.publicKey,
-                "evm",
+                "solana",
                 "This is a Dev Guide code example testing Ethereum key",
                 litNetwork,
                 undefined
@@ -196,7 +196,7 @@ export default function Home() {
 
         console.log("generateWrappedKeyResponse", generateWrappedKeyResponse);
 
-        console.log("signMsg()");
+        console.log(`signMsg() on ${litNetwork}`);
 
         const messageToSign = "The answer to the universe is 42";
 
@@ -222,7 +222,7 @@ export default function Home() {
             console.log("signedMessage", signedMessage);
         }
 
-        console.log("signTx()");
+        console.log(`signTx() on ${litNetwork}`);
 
         const generatedSolanaPublicKey = new PublicKey(
             generateWrappedKeyResponse.generatedPublicKey
