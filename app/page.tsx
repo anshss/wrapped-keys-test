@@ -40,16 +40,19 @@ export default function Home() {
         const mintedPkp = await mintPkp(ethersSigner, litNetwork);
         console.log("mintedPkp: ", mintedPkp);
 
+        let capacityDelegationAuthSig;
+
+        if (litNetwork != LitNetwork.DatilDev) {
+            capacityDelegationAuthSig = await mintAndDelegateCapacityCredit(
+                ethersSigner,
+                litNetwork,
+                mintedPkp!.ethAddress
+            );
+        }
+
         let generateWrappedKeyResponse;
 
         if (litNetwork != LitNetwork.DatilDev) {
-            const capacityDelegationAuthSig =
-                await mintAndDelegateCapacityCredit(
-                    ethersSigner,
-                    litNetwork,
-                    mintedPkp!.ethAddress
-                );
-
             generateWrappedKeyResponse = (await generateWrappedKey(
                 mintedPkp!.publicKey,
                 "evm",
@@ -81,14 +84,27 @@ export default function Home() {
             "The answer to the universe is 42"
         );
 
-        const signedMessage = (await signMessageWithWrappedKey(
-            mintedPkp!.publicKey,
-            "evm",
-            generateWrappedKeyResponse.id,
-            messageToSign,
-            litNetwork
-        )) as string;
-        console.log("signedMessage", signedMessage);
+        if (litNetwork != LitNetwork.DatilDev) {
+            const signedMessage = (await signMessageWithWrappedKey(
+                mintedPkp!.publicKey,
+                "evm",
+                generateWrappedKeyResponse.id,
+                messageToSign,
+                litNetwork,
+                capacityDelegationAuthSig
+            )) as string;
+            console.log("signedMessage", signedMessage);
+        } else {
+            const signedMessage = (await signMessageWithWrappedKey(
+                mintedPkp!.publicKey,
+                "evm",
+                generateWrappedKeyResponse.id,
+                messageToSign,
+                litNetwork,
+                undefined
+            )) as string;
+            console.log("signedMessage", signedMessage);
+        }
 
         console.log("signTx()");
 
@@ -100,15 +116,29 @@ export default function Home() {
             gasLimit: 21_000,
         };
 
-        const signedTransaction = await signTransactionWithWrappedKey(
-            mintedPkp!.publicKey,
-            "evm",
-            generateWrappedKeyResponse.id,
-            litTransaction,
-            false,
-            litNetwork
-        );
-        console.log("signedTransaction", signedTransaction);
+        if (litNetwork != LitNetwork.DatilDev) {
+            const signedTransaction = await signTransactionWithWrappedKey(
+                mintedPkp!.publicKey,
+                "evm",
+                generateWrappedKeyResponse.id,
+                litTransaction,
+                false,
+                litNetwork,
+                capacityDelegationAuthSig
+            );
+            console.log("signedTransaction", signedTransaction);
+        } else {
+            const signedTransaction = await signTransactionWithWrappedKey(
+                mintedPkp!.publicKey,
+                "evm",
+                generateWrappedKeyResponse.id,
+                litTransaction,
+                false,
+                litNetwork,
+                undefined
+            );
+            console.log("signedTransaction", signedTransaction);
+        }
     }
 
     async function handleTestsSolana(litNetwork: LitNetwork) {
@@ -126,16 +156,19 @@ export default function Home() {
         );
         const mintedPkp = await mintPkp(ethersSigner, litNetwork);
 
+        let capacityDelegationAuthSig;
+
+        if (litNetwork != LitNetwork.DatilDev) {
+            capacityDelegationAuthSig = await mintAndDelegateCapacityCredit(
+                ethersSigner,
+                litNetwork,
+                mintedPkp!.ethAddress
+            );
+        }
+
         let generateWrappedKeyResponse;
 
         if (litNetwork != LitNetwork.DatilDev) {
-            const capacityDelegationAuthSig =
-                await mintAndDelegateCapacityCredit(
-                    ethersSigner,
-                    litNetwork,
-                    mintedPkp!.ethAddress
-                );
-
             generateWrappedKeyResponse = (await generateWrappedKey(
                 mintedPkp!.publicKey,
                 "evm",
@@ -167,14 +200,27 @@ export default function Home() {
 
         const messageToSign = "The answer to the universe is 42";
 
-        const signedMessage = (await signMessageWithWrappedKey(
-            mintedPkp!.publicKey,
-            "solana",
-            generateWrappedKeyResponse.id,
-            messageToSign,
-            litNetwork
-        )) as string;
-        console.log("signedMessage", signedMessage);
+        if (litNetwork != LitNetwork.DatilDev) {
+            const signedMessage = (await signMessageWithWrappedKey(
+                mintedPkp!.publicKey,
+                "solana",
+                generateWrappedKeyResponse.id,
+                messageToSign,
+                litNetwork,
+                capacityDelegationAuthSig
+            )) as string;
+            console.log("signedMessage", signedMessage);
+        } else {
+            const signedMessage = (await signMessageWithWrappedKey(
+                mintedPkp!.publicKey,
+                "solana",
+                generateWrappedKeyResponse.id,
+                messageToSign,
+                litNetwork,
+                undefined
+            )) as string;
+            console.log("signedMessage", signedMessage);
+        }
 
         console.log("signTx()");
 
@@ -211,15 +257,29 @@ export default function Home() {
             chain: "devnet",
         };
 
-        const signedTransaction = await signTransactionWithWrappedKey(
-            mintedPkp!.publicKey,
-            "solana",
-            generateWrappedKeyResponse.id,
-            litTransaction,
-            false,
-            litNetwork
-        );
-        console.log("signedTransaction", signedTransaction);
+        if (litNetwork != LitNetwork.DatilDev) {
+            const signedTransaction = await signTransactionWithWrappedKey(
+                mintedPkp!.publicKey,
+                "solana",
+                generateWrappedKeyResponse.id,
+                litTransaction,
+                false,
+                litNetwork,
+                capacityDelegationAuthSig
+            );
+            console.log("signedTransaction", signedTransaction);
+        } else {
+            const signedTransaction = await signTransactionWithWrappedKey(
+                mintedPkp!.publicKey,
+                "solana",
+                generateWrappedKeyResponse.id,
+                litTransaction,
+                false,
+                litNetwork,
+                undefined
+            );
+            console.log("signedTransaction", signedTransaction);
+        }
     }
 
     return (
