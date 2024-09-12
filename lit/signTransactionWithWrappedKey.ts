@@ -20,7 +20,8 @@ export const signTransactionWithWrappedKey = async (
   evmOrSolana: "evm" | "solana",
   wrappedKeyId: string,
   unsignedTransaction: EthereumLitTransaction | SerializedTransaction,
-  broadcastTransaction: boolean
+  broadcastTransaction: boolean,
+  litNetwork: LitNetwork
 ) => {
   let litNodeClient: LitNodeClient;
 
@@ -37,7 +38,7 @@ export const signTransactionWithWrappedKey = async (
 
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.DatilDev,
+      litNetwork: litNetwork,
       debug: false,
     });
     await litNodeClient.connect();

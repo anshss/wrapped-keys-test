@@ -14,7 +14,8 @@ export const signMessageWithWrappedKey = async (
   pkpPublicKey: string,
   evmOrSolana: "evm" | "solana",
   wrappedKeyId: string,
-  messageToSign: string | Uint8Array
+  messageToSign: string | Uint8Array,
+  litNetwork: LitNetwork
 ) => {
   let litNodeClient: LitNodeClient;
 
@@ -31,7 +32,7 @@ export const signMessageWithWrappedKey = async (
 
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.DatilDev,
+      litNetwork: litNetwork,
       debug: false,
     });
     await litNodeClient.connect();
